@@ -58,20 +58,20 @@ class Dinosaur(Sprite):
         self.step_index+=1
         
 
-def jump(self):
-        self.image = JUMPING        
-        if self.dino_jumping:
-            self.dino_rect.y -= self.jump_vel * 4 # Salto            
-            self.jump_vel -= 0.8 # Salto, cuando llega a negativo, baja        
-        if self.jump_vel < -self.JUMP_VEL: # Cuando llega a JUMP_VEL en negativo, este se detiene            
-            self.dino_rect.y = self.Y_POS            
-            self.dino_jumping = False            
-            self.jump_vel = self.JUMP_VEL
+    def jump(self):
+            self.image = JUMPING        
+            if self.dino_jumping:
+                self.dino_rect.y -= self.jump_vel * 4 # Salto            
+                self.jump_vel -= 0.8 # Salto, cuando llega a negativo, baja        
+            if self.jump_vel < -self.JUMP_VEL: # Cuando llega a JUMP_VEL en negativo, este se detiene            
+                self.dino_rect.y = self.Y_POS            
+                self.dino_jumping = False            
+                self.jump_vel = self.JUMP_VEL
 
-def duck(self):
-    self.image =DUCKING[0] if self.step_index < 5 else DUCKING[1]
-    self.dino_rect=self.image.get_rect()
-    self.dino_rect.x=self.POS_X
-    self.dino_rect.y=self.POX_Y_DUCKING
-    self.step_index+=1
+    def duck(self):
+        self.image =DUCKING[0] if self.step_index < 5 else DUCKING[1]
+        self.dino_rect=self.image.get_rect()
+        self.dino_rect.x=self.POS_X
+        self.dino_rect.y=self.POX_Y_DUCKING
+        self.step_index+=1
         
