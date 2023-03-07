@@ -10,15 +10,17 @@ class ObstacleManager:
 
     def update(self, game):
         if len(self.obstacles)==0:
-               
-            if random.randint(0,2)==1:
+            var=random.randint(0,2)   
+            if var==0:
                 self.obstacles.append(Cactus(SMALL_CACTUS))
-            elif random.randint(0,2)==2:
+            elif var==1:
                large=Cactus(LARGE_CACTUS)
                large.rect.y= self.POS_Y_LARGE_CACTUS
                self.obstacles.append(large)
             else: 
-                self.obstacles.append(Bird(BIRD))           
+                pos_y_bird=random.randint(200,280)
+                self.obstacles.append(Bird(BIRD,pos_y_bird))
+                print("bird",var)           
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed,self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):

@@ -5,6 +5,7 @@ class Obstacle(Sprite):
     def __init__(self, image_lista,type):
         self.image_list=image_lista
         self.type= type
+        self.image= image_lista[type]
         self.rect= image_lista[type].get_rect()
         self.rect.x=SCREEN_WIDTH
 
@@ -14,4 +15,4 @@ class Obstacle(Sprite):
             obstacle.pop()
 
     def draw(self, screen):
-        screen.blit(self.image_list[self.type],self.rect)
+        screen.blit(self.image,self.rect)
