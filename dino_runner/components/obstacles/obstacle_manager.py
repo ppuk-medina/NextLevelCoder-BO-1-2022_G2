@@ -20,7 +20,7 @@ class ObstacleManager:
             else: 
                 pos_y_bird=random.randint(200,280)
                 self.obstacles.append(Bird(BIRD,pos_y_bird))
-                print("bird",var)           
+                print("bird",var,pos_y_bird)           
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed,self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
@@ -31,6 +31,9 @@ class ObstacleManager:
     def draw(self,screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
+
+    def reset_obstacle(self):
+        self.obstacles=[]
 ######
 #   Agregar el bird
 #   Agregar LOS 2 CACTUS
