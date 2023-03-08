@@ -9,4 +9,4 @@ if __name__ == "__main__":
             death_count+=1
 
     
-# tarea realizar un mejor menu
+# tarea realizar un mejor menu , y rponer musica 
