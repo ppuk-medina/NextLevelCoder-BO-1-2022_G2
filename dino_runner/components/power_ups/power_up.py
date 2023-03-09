@@ -7,7 +7,7 @@ class PowerUp(Sprite):
         self.type=type
         self.rect= self.image.get_rect()
         self.rect.x=SCREEN_WIDTH
-        self.rect.y=random.randint(150,300)
+        self.rect.y=random.randint(150,200)
         pass
 
     def update(self,game_speed,powerup_list):
@@ -15,7 +15,7 @@ class PowerUp(Sprite):
 
         if self.rect.x<=0:
             powerup_list.pop()
-        pass
+        
 
     def draw(self, screen):
         screen.blit(self.image,self.rect)

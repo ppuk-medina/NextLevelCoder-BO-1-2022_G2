@@ -1,5 +1,5 @@
 import pygame
-from dino_runner.utils.constants import COLORS, SCREEN_HEIGHT, SCREEN_WIDTH
+from dino_runner.utils.constants import COLORS, SCREEN_HEIGHT, SCREEN_WIDTH, MESSAGE_GAMEOVER
 
 class TextUtils:
     FONT_STYLE="freesansbold.ttf"
@@ -18,3 +18,11 @@ class TextUtils:
         text_rect=text.get_rect()
         text_rect.center= (width,height)
         return text,text_rect
+    
+    
+
+
+
+        
+
+

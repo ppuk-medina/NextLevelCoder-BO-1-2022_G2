@@ -20,16 +20,24 @@ class ObstacleManager:
             else: 
                 pos_y_bird=random.randint(200,280)
                 self.obstacles.append(Bird(BIRD,pos_y_bird))
-                print("bird",var,pos_y_bird)           
+                          
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed,self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):
                 if not game.player.shield:
-                    pygame.time.delay(500)
+                    game.sound_game.sound_game_stop()
+                    game.player.dead() 
+                    game.get_game_over_img()
+                    game.sound_game.sound_dead()
+                    game.draw()
+                    pygame.time.delay(1000)
+                    
                     game.playing=False
                     break
                 else:
-                    self.obstacles.remove(obstacle)
+                    game.sound_game.sound_shieldp()
+                    if len(self.obstacles)!=0:
+                        self.obstacles.remove(obstacle)
 
     def draw(self,screen):
         for obstacle in self.obstacles:

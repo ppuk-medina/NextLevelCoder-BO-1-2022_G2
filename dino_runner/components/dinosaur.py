@@ -5,7 +5,8 @@
 
 import pygame
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import RUNNING, DUCKING,JUMPING, DEFAULT_TYPE, SHIELD_TYPE , RUNNING_SHIELD,DUCKING_SHIELD,JUMPING_SHIELD
+from dino_runner.components.text_utils import TextUtils
+from dino_runner.utils.constants import RUNNING, DUCKING,JUMPING, DEFAULT_TYPE, SHIELD_TYPE , RUNNING_SHIELD,DUCKING_SHIELD,JUMPING_SHIELD, DEAD
 
 class Dinosaur(Sprite):
     POS_X=80
@@ -29,6 +30,7 @@ class Dinosaur(Sprite):
             DEFAULT_TYPE: JUMPING,
             SHIELD_TYPE : JUMPING_SHIELD
         }
+        self.dead_img=DEAD
         self.type=DEFAULT_TYPE
         self.step_index=0
         self.image=self.run_img[self.type][self.step_index]
@@ -40,6 +42,7 @@ class Dinosaur(Sprite):
         self.dino_ducking=False
         self.dino_jumping=False
         self.jump_vel=self.JUMP_VEL
+        self.status_text=TextUtils()
         self.setup_state_booleans()
     
     def setup_state_booleans(self):
@@ -55,7 +58,7 @@ class Dinosaur(Sprite):
         elif self.dino_ducking:
             self.duck()
         elif self.dino_jumping:
-            self.jump()            
+            self.jump()   
         if user_input[pygame.K_DOWN] and not self.dino_jumping:
             self.dino_running=False
             self.dino_ducking=True
@@ -68,7 +71,7 @@ class Dinosaur(Sprite):
             self.dino_running=True
             self.dino_ducking=False
             self.dino_jumping=False        
-            
+        
         if self.step_index>=10:
             self.step_index=0        
 
@@ -85,6 +88,7 @@ class Dinosaur(Sprite):
 
     def jump(self):
         self.image = self.jum_img[self.type]
+        
         if self.dino_jumping:
             self.dino_rect.y -= self.jump_vel * 4 # Salto
             self.jump_vel -= 0.8 # Salto, cuando llega a negativo, baja
@@ -92,7 +96,7 @@ class Dinosaur(Sprite):
             self.dino_rect.y = self.POS_Y
             self.dino_jumping = False
             self.jump_vel = self.JUMP_VEL
-
+        
     def duck(self):
         self.image =self.duck_img[self.type][self.step_index//5]
         self.dino_rect=self.image.get_rect()
@@ -100,17 +104,26 @@ class Dinosaur(Sprite):
         self.dino_rect.y=self.POS_Y_DUCKING
         self.step_index+=1
         
-    def check_invincibiliry(self):
+    def check_invincibility(self,screen):
         if self.shield:
-            time_to_show=round((self.shield_time_up - pygame.time.get_ticks())/1000,2)
-            if time_to_show>=0:
-                #show remaining time
-                pass
+            time_to_show=round((self.shield_time_up - pygame.time.get_ticks())/1000,0)
+            if time_to_show>0:
+                text, text_rect= self.status_text.get_centered_message(self.type+" time: "+str(int(time_to_show)), height=80)
+                screen.blit(text, text_rect)
             else:
-            
                 self.shield=False
                 self.update_to_default(SHIELD_TYPE)
     
     def update_to_default(self, current_type):
         if self.type==current_type:
             self.type=DEFAULT_TYPE
+
+    def dead(self):
+        self.image= self.dead_img
+        if self.dino_ducking:
+            (posx,posy)=self.POS_X,self.POS_Y
+        else:
+            (posx,posy)=self.dino_rect.x,self.dino_rect.y
+        self.dino_rect=self.image.get_rect()
+        self.dino_rect.x=posx
+        self.dino_rect.y=posy

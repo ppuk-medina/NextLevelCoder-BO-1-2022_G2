@@ -1,12 +1,13 @@
 import pygame
 import os
-
+pygame.mixer.init()
 # Global Constants
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
+
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
@@ -25,6 +26,8 @@ RUNNING_HAMMER = [
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Hammer.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2.png")),
 ]
+
+DEAD= pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDead.png"))
 
 JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
 JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
@@ -68,6 +71,17 @@ HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+
+
+SOUNDTRACK_GAMEPLAY = [
+    pygame.mixer.Sound(os.path.join(IMG_DIR, 'Soundtrack/gameplay_sound.mp3')),
+    pygame.mixer.Sound(os.path.join(IMG_DIR, 'Soundtrack/dead_sound.mp3')),
+    pygame.mixer.Sound(os.path.join(IMG_DIR, 'Soundtrack/jump_sound.mp3')),
+    pygame.mixer.Sound(os.path.join(IMG_DIR, 'Soundtrack/shield_protec_sound.mp3')),
+]
+
+MESSAGE_GAMEOVER= pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
+
 
 DEFAULT_TYPE = "default"
 SHIELD_TYPE="shield"
