@@ -3,6 +3,7 @@ from dino_runner.components.text_utils import TextUtils
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS,COLORS, RUNNING
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
+from dino_runner.components.power_ups.powerup_manager import PowerUpManager
 class Game:
     def __init__(self):
         pygame.init()
@@ -19,6 +20,7 @@ class Game:
         self.points=0
         self.text_utils=TextUtils()
         self.game_running=True
+        self.powerup_manager=PowerUpManager()
 
     def run(self):
         # Game loop: events - update - draw
@@ -37,8 +39,10 @@ class Game:
                 self.playing = False
 
     def update(self):
-        self.player.update(pygame.key.get_pressed())
+        user_input=pygame.key.get_pressed()
+        self.player.update(user_input)
         self.obstacle_manager.update(self)
+        self.powerup_manager.update(self.points,self.game_speed,self.player)
         
 
     def draw(self):
@@ -49,6 +53,7 @@ class Game:
         
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.powerup_manager.draw(self.screen)
         self.score()
 
         pygame.display.update()
@@ -66,6 +71,7 @@ class Game:
     def score(self):
         self.points+=1
         text, text_rect= self.text_utils.get_score(self.points)
+        
         self.screen.blit(text, text_rect)
 
     def show_menu(self, death_count=0):
